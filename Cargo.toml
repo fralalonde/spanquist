@@ -1,0 +1,14 @@
+[package]
+name = "spanquist"
+version = "0.1.0"
+authors = ["Francis Lalonde <fralalonde@gmail.com>"]
+description = """Abruptly stop an application after a random amount of time."""
+documentation = "https://docs.rs/spanquist"
+homepage = "https://github.com/fralalonde/spanquist"
+repository = "https://github.com/fralalonde/spanquist"
+readme = "README.md"
+keywords = ["test", "process", "spanish", "inquisition", "random"]
+license-file = "LICENSE"
+
+[dependencies]
+rand = "0.3"
