@@ -1,6 +1,6 @@
 [package]
 name = "spanquist"
-version = "0.1.1-pre"
+version = "0.1.1"
 authors = ["Francis Lalonde <fralalonde@gmail.com>"]
 description = """A macro to randomly schedule self-termination of application."""
 documentation = "https://docs.rs/spanquist"
