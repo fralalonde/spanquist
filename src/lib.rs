@@ -1,12 +1,25 @@
+//! A Monty Python-inspired crate to abruptly stop an application after a random amount of time.
+//! Known uses :
+//! - Validate that would-be resilient systems properly handle spuriously terminating applications.
+//! - Take the piss out of your _upper class twit of the year_ boss, colleagues and customers.
+
 extern crate rand;
 
-use std::thread::{spawn, sleep};
+use std::thread;
 use std::process;
 use std::time::Duration;
 use rand::{thread_rng,Rng};
 
-/// Wrap your the main function of your application with this macro to
-/// have it stop after a random period of time of up to an hour.
+/// Randomly schedule self-termination of application.
+///
+/// `spanquist!` is used by wrapping the `fn main() {}` of the target application.
+/// Random termination delay is determined upon start.
+/// Use of `spanquist!` is transparent to the application and can not be controlled at runtime.
+///
+///
+/// Upon termination the message `NOBODY EXPECTS THE SPANISH INQUISITION!` is printed to stderr.
+/// The delay for termination is currently limited to an hour but could be changed in future
+/// releases so as to keep you on your toes.
 ///
 /// ```rust,no_run
 /// #[macro_use] extern crate spanquist;
@@ -32,13 +45,16 @@ macro_rules! spanquist {
     }}
 }
 
+#[allow(unused_must_use)]
 pub fn nobody_expects() {
-    spawn(|| the_spanish_inquisition());
+    thread::Builder::new()
+        .name("spanquist".to_string())
+        .spawn(|| the_spanish_inquisition());
 }
 
 fn the_spanish_inquisition() {
     let delay_ms = thread_rng().gen_range(0, 3600 * 1000);
-    sleep(Duration::from_millis(delay_ms));
-    eprintln!("NOBODY EXPECTS THE SPANISH INQUISITION!");
+    thread::sleep(Duration::from_millis(delay_ms));
+    eprintln!("NOBODY EXPECTS THE SPANISH INQUISITION");
     process::exit(-1);
 }
